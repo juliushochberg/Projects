@@ -1,0 +1,41 @@
+#enter the names of the people playing
+name_player1 = input("Name of Player 1: ")
+name_player2 = input("Name of Player 2: ")
+#enter player's original ratings here
+r_player1 = int(input(name_player1 + "'s rating: "))
+r_player2 = int(input(name_player2 + "'s rating: "))
+#enter the results of the match; if player 1 is the winner, score_player1 = 1.0, and score_player2 = 0.0; if the match is a draw, boths player's scores are equal to 0.5
+score_player1 = 0.0
+score_player2 = 0.0
+#Determine the scores of the player's after they are initialized as zero
+winner = input("Who won? ")
+
+if winner == str(name_player1) or "player 1" or "player1":
+  score_player1 = 1.0
+elif winner == str(name_player2) or "player 2" or "player2":
+  score_player2 = 1.0
+else:
+  score_player1 = 0.5
+  score_player2 = 0.5
+#enter the k value; this value determines the factor by which each match affects the participating player's rating
+K = 50.0
+
+#here are the actual elo equations
+R1 = 10.0 ** (r_player1/400)
+R2 = 10.0 ** (r_player2/400)
+E1 = R1/(R1+R2)
+E2 = R2/(R1+R2)
+rprime_player1 = r_player1 + K*(score_player1-E1)
+rprime_player2 = r_player2 + K*(score_player2-E2)
+
+#this prints the original and updated ratings, as well as the results of the match
+print(str(name_player1) + "(" + str(r_player1) + ")" + " vs. " + str(name_player2) + "(" + str(r_player2) + ")")
+
+if score_player1 == 1:
+  print(str(name_player1) + " wins")
+elif score_player2 == 1:
+  print(str(name_player2) + " wins")
+else:
+  print("draw")
+
+print("updated ratings:\n" + str(name_player1) + ": ", str(rprime_player1), "\n" + str(name_player2), ": ", str(rprime_player2))
